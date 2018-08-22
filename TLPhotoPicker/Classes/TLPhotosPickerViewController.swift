@@ -69,7 +69,7 @@ public struct TLPhotosPickerConfigure {
     public var muteAudio = true
     public var mediaType: PHAssetMediaType? = nil
     public var numberOfColumn = 3
-    public var singleSelectedMode = false
+    public var singleSelectedMode = true
     public var maxSelectedAssets: Int? = nil
     public var fetchOption: PHFetchOptions? = nil
     public var selectedColor = UIColor(red: 88/255, green: 144/255, blue: 255/255, alpha: 1.0)
@@ -77,6 +77,8 @@ public struct TLPhotosPickerConfigure {
     public var cameraIcon = TLBundle.podBundleImage(named: "camera")
     public var videoIcon = TLBundle.podBundleImage(named: "video")
     public var placeholderIcon = TLBundle.podBundleImage(named: "insertPhotoMaterial")
+    public var multiselectOffIcon = TLBundle.podBundleImage(named: "multiselect")
+    public var multiselectOnIcon = TLBundle.podBundleImage(named: "multiselect2")
     public var nibSet: (nibName: String, bundle:Bundle)? = nil
     public var cameraCellNibSet: (nibName: String, bundle:Bundle)? = nil
     public init() {
@@ -107,6 +109,7 @@ open class TLPhotosPickerViewController: UIViewController {
     @IBOutlet open var customNavItem: UINavigationItem!
     @IBOutlet open var doneButton: UIBarButtonItem!
     @IBOutlet open var cancelButton: UIBarButtonItem!
+    @IBOutlet open var multiselectButton: UIBarButtonItem!
     @IBOutlet open var navigationBarTopConstraint: NSLayoutConstraint!
     @IBOutlet open var emptyView: UIView!
     @IBOutlet open var emptyImageView: UIImageView!
@@ -285,6 +288,12 @@ extension TLPhotosPickerViewController {
         self.cancelButton.title = self.configure.cancelTitle
         self.doneButton.title = self.configure.doneTitle
         self.doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: UIFont.labelFontSize)], for: .normal)
+        if (self.configure.singleSelectedMode) {
+            self.multiselectButton.image = self.configure.multiselectOffIcon
+        }
+        else {
+            self.multiselectButton.image = self.configure.multiselectOnIcon
+        }
         self.emptyView.isHidden = true
         self.emptyImageView.image = self.configure.emptyImage
         self.emptyMessageLabel.text = self.configure.emptyMessage
@@ -383,6 +392,20 @@ extension TLPhotosPickerViewController {
     @IBAction open func doneButtonTap() {
         self.stopPlay()
         self.dismiss(done: true)
+    }
+    
+    @IBAction open func multiselectButtonTap() {
+        self.configure.singleSelectedMode = !self.configure.singleSelectedMode
+        
+        if (self.configure.singleSelectedMode) {
+            self.multiselectButton.image = self.configure.multiselectOffIcon
+        }
+        else {
+            self.multiselectButton.image = self.configure.multiselectOnIcon
+        }
+
+        self.selectedAssets.removeAll();
+        self.orderUpdateCells();
     }
     
     fileprivate func dismiss(done: Bool) {

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,6 +22,7 @@
                 <outlet property="emptyMessageLabel" destination="7qj-q4-rHC" id="Bcp-Hu-lEY"/>
                 <outlet property="emptyView" destination="HPm-Vc-F86" id="4FT-XL-9ql"/>
                 <outlet property="indicator" destination="AEv-G6-dRI" id="coA-3n-07e"/>
+                <outlet property="multiselectButton" destination="fQv-P9-wnQ" id="cDO-ZI-otZ"/>
                 <outlet property="navigationBarTopConstraint" destination="IKp-hS-tTy" id="MFH-eP-0tb"/>
                 <outlet property="popArrowImageView" destination="5zn-je-qLx" id="6k9-cH-vcU"/>
                 <outlet property="subTitleArrowImageView" destination="b7w-7R-rco" id="IjY-7S-Zz1"/>
@@ -47,7 +49,7 @@
                                 </connections>
                             </barButtonItem>
                             <view key="titleView" contentMode="scaleToFill" id="VAz-Py-dsa">
-                                <rect key="frame" x="87.5" y="0.0" width="200" height="44"/>
+                                <rect key="frame" x="87" y="0.0" width="162.5" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Ql8-7f-9Uk">
@@ -88,11 +90,18 @@
                                     <constraint firstItem="Ql8-7f-9Uk" firstAttribute="leading" secondItem="VAz-Py-dsa" secondAttribute="leading" id="j8K-5o-bAh"/>
                                 </constraints>
                             </view>
-                            <barButtonItem key="rightBarButtonItem" title="Done" id="daA-Ag-vVv">
-                                <connections>
-                                    <action selector="doneButtonTap" destination="-1" id="BzF-rn-rn4"/>
-                                </connections>
-                            </barButtonItem>
+                            <rightBarButtonItems>
+                                <barButtonItem title="Done" id="daA-Ag-vVv">
+                                    <connections>
+                                        <action selector="doneButtonTap" destination="-1" id="BzF-rn-rn4"/>
+                                    </connections>
+                                </barButtonItem>
+                                <barButtonItem title="Item" image="multiselect.png" style="plain" id="fQv-P9-wnQ" userLabel="Multiselect Button">
+                                    <connections>
+                                        <action selector="multiselectButtonTap" destination="-1" id="38R-Og-XVo"/>
+                                    </connections>
+                                </barButtonItem>
+                            </rightBarButtonItems>
                         </navigationItem>
                     </items>
                 </navigationBar>
@@ -217,4 +226,7 @@
             <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="multiselect.png" width="33" height="33"/>
+    </resources>
 </document>
